@@ -1,22 +1,28 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 
 const App = () => {
   const [inputFieldValue, setInputFieldValue] = useState<string>("")
   const [result, setResult] = useState<number>(0)
+  const [negativeValue, setNegativeValue] = useState<number>(0)
 
   const handleAddANumber = (num: string) => {
     setInputFieldValue(num)
+    setNegativeValue(0)
     let newArr: [] = []
-    num.split(',').forEach(val => {
-      if (!isNaN(parseInt(val))) {
-        newArr.push(parseInt(val))
+    let temp = num.replaceAll('\\n', ',').split(',')
+    for (let i = 0; i < temp.length; i++) {
+      let convertedValue = parseInt(temp[i])
+      if (!isNaN(convertedValue)) {
+        if (convertedValue < 0) {
+          setNegativeValue(convertedValue)
+          break;
+        }
+        newArr.push(convertedValue)
       }
-    });
-    console.log("result==>", newArr);
 
+    }
     const sum = newArr?.reduce((partialSum: number, a: number) => partialSum + a, 0);
-    console.log("sums==>", sum);
     setResult(sum)
   }
 
@@ -30,7 +36,7 @@ const App = () => {
     <View style={styles.container}>
       <TextInput testID='ti-to-take-number-input' value={inputFieldValue} placeholder='Enter a first number to add' onChangeText={(num: any) => handleAddANumber(num)} style={styles.textInputField} />
       <View style={styles.textAndButtonContainer}>
-        <Text style={{ paddingHorizontal: 10 }} testID='t-display-text'>{result}</Text>
+        <Text style={{ paddingHorizontal: 10 }} testID='t-display-text'>{negativeValue ? `negative numbers not allowed ${negativeValue}` : result}</Text>
         <Button title="Clear Text" testID='b-clear-text' onPress={() => handleClearText()} />
       </View>
     </View>

@@ -37,4 +37,21 @@ describe('Example', () => {
         await expect(element(by?.id('t-display-text')))?.toHaveText('6')
     })
 
+    it('should handle new lines between numbers', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        await element(by?.id('ti-to-take-number-input'))?.typeText('1\\n2,3')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('6')
+    })
+    it('should not allowed negative numbers within multiple positive numbers', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        // await element(by?.id('ti-to-take-number-input'))?.typeText('-1')
+        await element(by?.id('ti-to-take-number-input'))?.typeText('1,2,3,4,5,6,-7')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -7')
+    })
+    it('should not allowed negative numbers within single positive numbers as well', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        await element(by?.id('ti-to-take-number-input'))?.typeText('-1')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -1')
+    })
+
 })
