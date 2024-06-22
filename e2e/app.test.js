@@ -53,5 +53,15 @@ describe('Example', () => {
         await element(by?.id('ti-to-take-number-input'))?.typeText('-1')
         await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -1')
     })
+    it('should support different delimiters', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        await element(by?.id('ti-to-take-number-input'))?.typeText('//;\\n1;2')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('3')
+    })
+    it('should support different delimiters and new lines between numbers', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        await element(by?.id('ti-to-take-number-input'))?.typeText('//;\\n1;2\\n3')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('6')
+    })
 
 })

@@ -9,21 +9,46 @@ const App = () => {
   const handleAddANumber = (num: string) => {
     setInputFieldValue(num)
     setNegativeValue(0)
-    let newArr: [] = []
-    let temp = num.replaceAll('\\n', ',').split(',')
+
+    let delimiter = ","
+    let newString = num
+    if (num.indexOf("//") === 0 && num.length > 5) {
+
+      delimiter = num[2];
+
+      let numArr = num.split('');
+
+      for (let i = 0; i < numArr.length; i++) {
+        if (numArr[i] == "n") {
+          numArr[i] = "\Y"
+          break
+        }
+      }
+      newString = numArr.join('');
+    }
+    let finalString
+    if (newString.indexOf("//" + delimiter + "\\Y") === 0) {
+      finalString = newString.substring(5)
+    } else {
+      finalString = newString
+    }
+
+    let result = 0;
+    let temp = finalString?.replaceAll('\\n', delimiter).split(delimiter)
     for (let i = 0; i < temp.length; i++) {
       let convertedValue = parseInt(temp[i])
+
       if (!isNaN(convertedValue)) {
         if (convertedValue < 0) {
           setNegativeValue(convertedValue)
           break;
         }
-        newArr.push(convertedValue)
+        result += convertedValue;
       }
 
     }
-    const sum = newArr?.reduce((partialSum: number, a: number) => partialSum + a, 0);
-    setResult(sum)
+    setResult(result)
+    console.log('fdlog', result);
   }
 
   const handleClearText = () => {
