@@ -1,4 +1,3 @@
-const { log } = require('detox');
 
 describe('Example', () => {
     beforeAll(async () => {

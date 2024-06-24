@@ -39,6 +39,7 @@ const App = () => {
     }
 
     let finalString
+
     //with this if statment we are finally getting value matching //[delimiter]\n[numbers…] expression
     if (newString.indexOf("//" + delimiter + "\\Y") === 0) {
       finalString = newString.substring(5)
@@ -50,17 +51,20 @@ const App = () => {
 
     let temp = finalString?.replaceAll('\\n', delimiter).split(delimiter)
     var arrNew = []
+
     //this will help to calculate the value for an output
     for (let i = 0; i < temp.length; i++) {
       let convertedValue = parseInt(temp[i])
 
-      // to check if teh value is Not A Number
+      // to check if the value is Not A Number
       if (!isNaN(convertedValue)) {
         if (convertedValue < 0) {
-          //inside this if statment we are chcek and pushing multiple negative values
+
+          //inside this if statment we are chceking and pushing multiple negative values
           arrNew.push(convertedValue)
           setNegativeValue(arrNew)
         } else {
+
           // simpling calculating the result
           result += convertedValue;
         }
