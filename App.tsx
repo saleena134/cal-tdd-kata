@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 const App = () => {
   const [inputFieldValue, setInputFieldValue] = useState<string>("")
   const [result, setResult] = useState<number>(0)
-  const [negativeValue, setNegativeValue] = useState<number>(0)
+  const [negativeValue, setNegativeValue] = useState<Array<Number>>()
 
   const handleAddANumber = (num: string) => {
     setInputFieldValue(num)
-    setNegativeValue(0)
+    setNegativeValue(undefined)
 
     let delimiter = ","
     let newString = num
@@ -35,20 +35,21 @@ const App = () => {
 
     let result = 0;
     let temp = finalString?.replaceAll('\\n', delimiter).split(delimiter)
+    var arrNew = []
     for (let i = 0; i < temp.length; i++) {
       let convertedValue = parseInt(temp[i])
 
       if (!isNaN(convertedValue)) {
         if (convertedValue < 0) {
-          setNegativeValue(convertedValue)
-          break;
+          arrNew.push(convertedValue)
+          setNegativeValue(arrNew)
+        } else {
+          result += convertedValue;
         }
-        result += convertedValue;
       }
 
     }
     setResult(result)
-    console.log('fdlog', result);
   }
 
   const handleClearText = () => {
