@@ -44,7 +44,6 @@ describe('Example', () => {
     })
     it('should not allowed negative numbers within multiple positive numbers', async () => {
         await element(by?.id('b-clear-text'))?.tap()
-        // await element(by?.id('ti-to-take-number-input'))?.typeText('-1')
         await element(by?.id('ti-to-take-number-input'))?.typeText('1,2,3,4,5,6,-7')
         await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -7')
     })
@@ -63,10 +62,10 @@ describe('Example', () => {
         await element(by?.id('ti-to-take-number-input'))?.typeText('//;\\n1;2\\n3')
         await expect(element(by?.id('t-display-text')))?.toHaveText('6')
     })
-    // it('should numtiple negative numbers seprated by comma', async () => {
-    //     await element(by?.id('b-clear-text'))?.tap()
-    //     await element(by?.id('ti-to-take-number-input'))?.typeText('-1,-2,-3')
-    //     await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -1,-2,-3')
-    // })
+    it('should numtiple negative numbers seprated by comma', async () => {
+        await element(by?.id('b-clear-text'))?.tap()
+        await element(by?.id('ti-to-take-number-input'))?.typeText('-1,-2,-3')
+        await expect(element(by?.id('t-display-text')))?.toHaveText('negative numbers not allowed -1,-2,-3')
+    })
 
 })
